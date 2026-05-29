@@ -17,14 +17,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from fetch_awards import fetch_awards
-from seen_ids import load_seen, save_seen, filter_new, mark_seen
+from seen_ids import load_seen, save_seen, filter_new, mark_seen, prune_old_entries
 from alert import send_alert
+from config import AMOUNT_THRESHOLD_LABEL
 
 
 def main():
-    print("[main] Fetching new base contracts (Mod==0) > $50M from USAspending...")
+    print(f"[main] Fetching new base contracts (Mod==0) > ${AMOUNT_THRESHOLD_LABEL} from USAspending...")
     try:
-        awards = fetch_awards(hours_back=25)
+        awards = fetch_awards()
     except RuntimeError as e:
         print(f"[main] ERROR: {e}")
         sys.exit(1)
@@ -43,6 +44,7 @@ def main():
     send_alert(new_awards)
 
     seen = mark_seen(new_awards, seen)
+    seen = prune_old_entries(seen)
     save_seen(seen)
     print(f"[main] seen_ids.json updated ({len(seen)} total tracked IDs).")
 

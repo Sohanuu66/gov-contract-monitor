@@ -9,10 +9,11 @@ Runs automatically every hour via GitHub Actions. No server required.
 ## How It Works
 
 1. GitHub Actions triggers the script every hour
-2. `fetch_awards.py` calls the USAspending API for contracts > $50M in the last 2 hours
+2. `fetch_awards.py` calls the USAspending API for contracts > $50M in the last 25 hours
 3. `seen_ids.py` filters out already-alerted contracts (tracked in `seen_ids.json`)
 4. `alert.py` sends an HTML email with company name, amount, date, and agency
-5. `seen_ids.json` is committed back to the repo so state persists across runs
+5. `seen_ids.py` automatically prunes entries older than 30 days to prevent unbounded growth
+6. `seen_ids.json` is committed back to the repo so state persists across runs
 
 ---
 
@@ -67,6 +68,6 @@ usaspending-alert/
 
 ## API Used
 
-- **Endpoint**: `POST https://api.usaspending.gov/api/v2/search/spending_by_award/`
+- **Endpoint**: `POST https://api.usaspending.gov/api/v2/search/spending_by_transaction/`
 - **No API key required**
 - **Filter**: Contract award type codes `A, B, C, D` + `award_amounts.lower_bound = 50,000,000`
