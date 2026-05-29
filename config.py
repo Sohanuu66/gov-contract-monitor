@@ -38,12 +38,34 @@ API_FIELDS = [
 # Results per page (API max is 100)
 PAGE_LIMIT = 100
 
-# How many hours back to query (25h covers yesterday + today safely,
-# since API date filters are date-only not datetime)
-HOURS_BACK = 25 * 30
+# How many hours back to query (7 * 24 = 168 hours / 7 days)
+HOURS_BACK = 7 * 24
 
 # Timeout for API requests in seconds
 API_TIMEOUT = 30
+
+
+# ─────────────────────────────────────────────
+# FEATURES: SUMMARY & CSV
+# ─────────────────────────────────────────────
+
+# Toggle executive summary at the top of emails
+ENABLE_EXECUTIVE_SUMMARY = True
+
+# Toggle CSV attachment
+ENABLE_CSV_ATTACHMENT = True
+CSV_ATTACHMENT_FILENAME = "usaspending_contracts_{date}.csv"
+
+# Columns to include in the CSV attachment
+# Format: (CSV_Header, API_Field_Key)
+CSV_COLUMNS = [
+    ("Award Date",          "Action Date"),
+    ("Recipient Name",      "Recipient Name"),
+    ("Transaction Amount",  "Transaction Amount"),
+    ("Award ID",            "Award ID"),
+    ("Awarding Agency",      "Awarding Agency"),
+    ("Description",         "Transaction Description"),
+]
 
 
 # ─────────────────────────────────────────────

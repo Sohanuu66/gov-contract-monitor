@@ -8,12 +8,13 @@ Runs automatically every hour via GitHub Actions. No server required.
 
 ## How It Works
 
-1. GitHub Actions triggers the script every hour
-2. `fetch_awards.py` calls the USAspending API for contracts > $50M in the last 25 hours
+1. GitHub Actions triggers the script every **12 hours**
+2. `fetch_awards.py` calls the USAspending API for contracts > $50M in the last **7 days (168 hours)**
 3. `seen_ids.py` filters out already-alerted contracts (tracked in `seen_ids.json`)
-4. `alert.py` sends an HTML email with company name, amount, date, and agency
-5. `seen_ids.py` automatically prunes entries older than 30 days to prevent unbounded growth
-6. `seen_ids.json` is committed back to the repo so state persists across runs
+4. `alert.py` calculates an **Executive Summary** (Total contracts, Total/Largest/Average values, and Unique recipient companies) and constructs the email
+5. `alert.py` dynamically generates and attaches a **CSV report** containing detailed contract data
+6. `seen_ids.py` automatically prunes entries older than 30 days to prevent unbounded growth
+7. `seen_ids.json` is committed back to the repo so state persists across runs
 
 ---
 

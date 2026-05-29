@@ -2,8 +2,8 @@ name: Contract Alert
 
 on:
   schedule:
-    # Runs every hour at :00
-    - cron: "0 * * * *"
+    # Runs every 12 hours at minute 0 (00:00 and 12:00 UTC)
+    - cron: "0 */12 * * *"
   # Allows manual trigger from GitHub Actions UI for testing
   workflow_dispatch:
 

@@ -55,7 +55,7 @@ def fetch_awards(hours_back: int = HOURS_BACK) -> list[dict]:
     start_date = (now - timedelta(hours=hours_back)).strftime("%Y-%m-%d")
     end_date = now.strftime("%Y-%m-%d")
 
-    print(f"[fetch] Querying {start_date} → {end_date} ...")
+    print(f"[fetch] Querying {start_date} -> {end_date} ...")
 
     all_transactions = []
     page = 1
@@ -74,7 +74,7 @@ def fetch_awards(hours_back: int = HOURS_BACK) -> list[dict]:
         all_transactions.extend(results)
 
         has_next = data.get("page_metadata", {}).get("hasNext", False)
-        print(f"[fetch] Page {page} → {len(results)} results | hasNext: {has_next}")
+        print(f"[fetch] Page {page} -> {len(results)} results | hasNext: {has_next}")
 
         if not has_next or not results:
             break
